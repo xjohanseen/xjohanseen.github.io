@@ -1,11 +1,11 @@
-import SpacePortfolio from "./components/SpacePortfolio"
+import Portfolio from "./components/Portfolio";
 
 
 function App() {
 
   return (
     <>
-    <SpacePortfolio />
+    <Portfolio />
     </>
   )
 }

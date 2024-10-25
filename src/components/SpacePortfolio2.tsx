@@ -7,7 +7,7 @@ import { FaGithub, FaLinkedin, FaEnvelope, FaFileDownload } from 'react-icons/fa
 
 export default function SpacePortfolio() {
   const [activeSection, setActiveSection] = useState<string | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
@@ -132,9 +132,9 @@ export default function SpacePortfolio() {
     ),
     About: (
       <div className="space-y-4">
-        <h2 className="text-2xl font-bold">About Peter Schun</h2>
+        <h2 className="text-2xl font-bold">About X Johanseen</h2>
         <p>
-          Peter Schun is a passionate full-stack developer with 8+ years of experience in creating innovative web and
+          X Johanseen is a passionate full-stack developer with 8+ years of experience in creating innovative web and
           mobile applications. He specializes in React, TypeScript, and Node.js, with a keen interest in AI and machine
           learning.
         </p>
@@ -182,7 +182,7 @@ export default function SpacePortfolio() {
           <canvas ref={canvasRef} className="absolute inset-0" />
           <div className="absolute top-4 left-4 z-10">
             <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
-              Peter Schun
+              X Johanseen
             </h1>
             <p className="text-xl">Full-Stack Developer & AI Enthusiast</p>
           </div>

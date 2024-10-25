@@ -7,16 +7,16 @@ import {
     Briefcase,
     ChevronRight,
     Github,
-    Linkedin,
-    Twitter,
     ExternalLink,
-    Bot
+    Bot,
+    Folder
   } from 'lucide-react';
 
 const Portfolio = () => {
   const [activeSection, setActiveSection] = useState<string>('about');
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
+  const [hoveredProject, setHoveredProject] = useState<string | null>(null);
   //const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   //const [cursorSize, setCursorSize] = useState(20);
 
@@ -70,6 +70,44 @@ const Portfolio = () => {
       color: 'from-orange-500 to-red-500',
       icon: <Bot className="w-6 h-6" />,
       description: 'Cloud infrastructure & serverless architecture'
+    }
+  ];
+
+  const projects = [
+    {
+      id: 'quantum-dash',
+      title: 'Quantum Dashboard',
+      description: 'Real-time analytics platform built with React, TypeScript, and D3.js. Features interactive visualizations and dark mode support.',
+      tags: ['React', 'TypeScript', 'D3.js', 'Firebase'],
+      image: '/public/quantum-dash.png',
+      links: {
+        github: 'https://github.com/xjohanseen/quantum-dash',
+        live: 'https://quantum-dash.demo'
+      },
+      color: 'from-cyan-500 to-blue-500'
+    },
+    {
+      id: 'neural-forge',
+      title: 'Neural Forge',
+      description: 'AI model training platform with distributed computing capabilities. Built with Python, PyTorch, and FastAPI.',
+      tags: ['Python', 'PyTorch', 'FastAPI', 'Redis'],
+      image: '/public/neural-forge.png',
+      links: {
+        github: 'https://github.com/xjohanseen/neural-forge'
+      },
+      color: 'from-purple-500 to-pink-500'
+    },
+    {
+      id: 'cryptosphere',
+      title: 'CryptoSphere',
+      description: 'Blockchain analytics tool with real-time market data visualization and portfolio tracking.',
+      tags: ['Node.js', 'Web3.js', 'React', 'GraphQL'],
+      image: '/public/cryptosphere.png',
+      links: {
+        github: 'https://github.com/xjohanseen/cryptosphere',
+        live: 'https://cryptosphere.demo'
+      },
+      color: 'from-green-500 to-emerald-500'
     }
   ];
 
@@ -129,15 +167,14 @@ const Portfolio = () => {
             </span>
           </h1>
           <p className="text-xl text-gray-400 font-space-grotesk leading-relaxed">
-            Full-stack developer crafting immersive digital experiences through elegant code and innovative design.
+            Crafting elegant digital experiences, One line of code at a time
           </p>
         </div>
         
         <div className="flex gap-6">
           {[
-            { icon: Github, href: "https://github.com", label: "GitHub" },
-            { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
-            { icon: Twitter, href: "https://twitter.com", label: "Twitter" }
+            { icon: Github, href: "https://github.com/xjohanseen", label: "GitHub" },
+            /**{ icon: Linkedin, href: "https://linkedin.com/xjohanseen", label: "LinkedIn" }, */
           ].map(({ icon: Icon, href, label }) => (
             <a
               key={label}
@@ -149,6 +186,10 @@ const Portfolio = () => {
               <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-xl blur opacity-0 group-hover:opacity-30 transition duration-300" />
             </a>
           ))}
+          <button className="group flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white transition-all duration-300 shadow-lg shadow-purple-500/25">
+            <Download className="w-5 h-5 transition-transform group-hover:scale-110" />
+            <span className="hidden md:inline font-space-grotesk">Download CV</span>
+            </button>
         </div>
       </div>
 
@@ -215,6 +256,81 @@ const Portfolio = () => {
       </div>
     </div>
   );
+
+  const ProjectsSection = () => (
+    <div className={`space-y-12 transform ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'} transition-all duration-1000`}>
+      <h2 className="text-4xl font-orbitron font-bold bg-gradient-to-r from-cyan-500 to-purple-600 text-transparent bg-clip-text">
+        Digital Creations
+      </h2>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {projects.map((project, index) => (
+          <div
+            key={project.id}
+            className="group relative"
+            onMouseEnter={() => setHoveredProject(project.id)}
+            onMouseLeave={() => setHoveredProject(null)}
+            style={{
+              animationDelay: `${index * 150}ms`
+            }}
+          >
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-xl blur opacity-30 group-hover:opacity-100 transition duration-300" />
+            <div className="relative h-full p-6 bg-gray-800 rounded-xl transition-all duration-300 hover:transform hover:scale-[1.02]">
+              <div className="flex items-center justify-between mb-4">
+                <div className={`p-2 rounded-lg bg-gradient-to-r ${project.color} bg-opacity-20`}>
+                  <Folder className="w-6 h-6" />
+                </div>
+                <div className="flex gap-3">
+                  {project.links.github && (
+                    <a
+                      href={project.links.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-lg hover:bg-gray-700 transition-colors duration-300"
+                      aria-label="View source code"
+                    >
+                      <Github className="w-5 h-5" />
+                    </a>
+                  )}
+                  {project.links.live && (
+                    <a
+                      href={project.links.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-lg hover:bg-gray-700 transition-colors duration-300"
+                      aria-label="View live project"
+                    >
+                      <ExternalLink className="w-5 h-5" />
+                    </a>
+                  )}
+                </div>
+              </div>
+
+              <h3 className="text-xl font-space-grotesk font-bold text-white mb-2">
+                {project.title}
+              </h3>
+              
+              <p className="text-gray-400 mb-4">
+                {project.description}
+              </p>
+              
+              <div className="flex flex-wrap gap-2 mt-auto">
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="px-3 py-1 text-sm rounded-full bg-gray-700 text-gray-300"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
 
   const HireSection = () => (
     <div className={`space-y-12 transform ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'} transition-all duration-1000`}>
@@ -335,17 +451,16 @@ const Portfolio = () => {
             <nav className="fixed bottom-8 left-1/2 transform -translate-x-1/2 flex gap-4 bg-gray-800/80 backdrop-blur-xl p-3 rounded-2xl shadow-2xl border border-gray-700/50 z-40">
               <NavButton icon={User} label="About" section="about" />
               <NavButton icon={Code} label="Skills" section="skills" />
+              <NavButton icon={Folder} label="Projects" section="projects" />
               <NavButton icon={Briefcase} label="Hire" section="hire" />
               <NavButton icon={Mail} label="Contact" section="contact" />
-              <button className="group flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white transition-all duration-300 shadow-lg shadow-purple-500/25">
-                <Download className="w-5 h-5 transition-transform group-hover:scale-110" />
-                <span className="hidden md:inline font-space-grotesk">CV</span>
-              </button>
+              
             </nav>
     
             <main className="pt-20 pb-32">
             {activeSection === 'about' && <AboutSection />}
             {activeSection === 'skills' && <SkillsSection />}
+            {activeSection === 'projects' && <ProjectsSection />}
             {activeSection === 'hire' && <HireSection />}
             {activeSection === 'contact' && <ContactSection />}
             </main>
