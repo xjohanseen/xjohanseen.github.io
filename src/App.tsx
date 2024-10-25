@@ -1,6 +1,6 @@
 
 import Portfolio from './components/Portfolio'
-import SpacePortfolio from './components/SpacePortfolio'
+import SpacePortfolio from './components/SpacePortfolio2'
 
 function App() {
 

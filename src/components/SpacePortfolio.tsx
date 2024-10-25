@@ -1,73 +1,154 @@
-
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaGithub, FaLinkedin, FaEnvelope, FaFileDownload } from 'react-icons/fa'
+import { Card, CardContent } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+
+// Types
+interface PlanetData {
+  name: SectionName
+  color: number
+  position: THREE.Vector3
+}
+
+type SectionName = 'Skills' | 'About' | 'Hire' | 'Contact'
+
+interface SectionContentProps {
+  title: string
+  children: React.ReactNode
+}
+
+// Components
+const SectionContent: React.FC<SectionContentProps> = ({ title, children }) => (
+  <div className="space-y-4">
+    <h2 className="text-2xl font-bold">{title}</h2>
+    {children}
+  </div>
+)
+
+const LoadingSpinner = () => (
+  <div className="absolute inset-0 flex items-center justify-center">
+    <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-white"></div>
+  </div>
+)
+
+const Header = () => (
+  <div className="absolute top-4 left-4 z-10">
+    <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
+      Peter Schun
+    </h1>
+    <p className="text-xl">Full-Stack Developer & AI Enthusiast</p>
+  </div>
+)
+
+const CVDownloadButton = () => (
+  <Button
+    asChild
+    className="absolute bottom-4 right-4 z-10 bg-white text-black hover:bg-gray-200 transition-colors"
+  >
+    <a href="/peter_schun_cv.pdf" download className="flex items-center space-x-2">
+      <FaFileDownload />
+      <span>Download CV</span>
+    </a>
+  </Button>
+)
 
 export default function SpacePortfolio() {
-  const [activeSection, setActiveSection] = useState<string | null>(null)
+  const [activeSection, setActiveSection] = useState<SectionName | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const sceneRef = useRef<THREE.Scene | null>(null)
+  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null)
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null)
+  const planetsRef = useRef<THREE.Mesh[]>([])
 
-  useEffect(() => {
+  const planetData: PlanetData[] = [
+    { name: 'Skills', color: 0x00ff00, position: new THREE.Vector3(-2, 2, 0) },
+    { name: 'About', color: 0xff0000, position: new THREE.Vector3(2, -2, 0) },
+    { name: 'Hire', color: 0x0000ff, position: new THREE.Vector3(-2, -2, 0) },
+    { name: 'Contact', color: 0xffff00, position: new THREE.Vector3(2, 2, 0) },
+  ]
+
+  const initThreeJS = useCallback(() => {
     if (!canvasRef.current) return
 
+    // Scene setup
     const scene = new THREE.Scene()
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
-    const renderer = new THREE.WebGLRenderer({ canvas: canvasRef.current, alpha: true })
+    const renderer = new THREE.WebGLRenderer({ 
+      canvas: canvasRef.current, 
+      alpha: true,
+      antialias: true 
+    })
 
+    renderer.setPixelRatio(window.devicePixelRatio)
     renderer.setSize(window.innerWidth, window.innerHeight)
     camera.position.z = 5
 
     const controls = new OrbitControls(camera, renderer.domElement)
     controls.enableDamping = true
     controls.dampingFactor = 0.05
+    controls.maxDistance = 10
+    controls.minDistance = 3
 
-    const planets: THREE.Mesh[] = []
-    const planetData = [
-      { name: 'Skills', color: 0x00ff00, position: new THREE.Vector3(-2, 2, 0) },
-      { name: 'About', color: 0xff0000, position: new THREE.Vector3(2, -2, 0) },
-      { name: 'Hire', color: 0x0000ff, position: new THREE.Vector3(-2, -2, 0) },
-      { name: 'Contact', color: 0xffff00, position: new THREE.Vector3(2, 2, 0) },
-    ]
-
+    // Create planets
     planetData.forEach((data) => {
       const geometry = new THREE.SphereGeometry(0.5, 32, 32)
-      const material = new THREE.MeshPhongMaterial({ color: data.color })
+      const material = new THREE.MeshPhongMaterial({ 
+        color: data.color,
+        shininess: 100,
+        specular: new THREE.Color(0x444444)
+      })
       const planet = new THREE.Mesh(geometry, material)
       planet.position.copy(data.position)
+      planet.userData.name = data.name
       scene.add(planet)
-      planets.push(planet)
+      planetsRef.current.push(planet)
     })
 
+    // Create stars
     const starGeometry = new THREE.BufferGeometry()
-    const starMaterial = new THREE.PointsMaterial({ color: 0xffffff })
-
-    const starVertices = []
-    for (let i = 0; i < 10000; i++) {
-      const x = (Math.random() - 0.5) * 2000
-      const y = (Math.random() - 0.5) * 2000
-      const z = -Math.random() * 2000
-      starVertices.push(x, y, z)
+    const starVertices = new Float32Array(30000)
+    for (let i = 0; i < 10000 * 3; i += 3) {
+      starVertices[i] = (Math.random() - 0.5) * 2000
+      starVertices[i + 1] = (Math.random() - 0.5) * 2000
+      starVertices[i + 2] = -Math.random() * 2000
     }
-
     starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3))
+    const starMaterial = new THREE.PointsMaterial({ 
+      color: 0xffffff,
+      size: 2,
+      sizeAttenuation: true
+    })
     const stars = new THREE.Points(starGeometry, starMaterial)
     scene.add(stars)
 
-    const ambientLight = new THREE.AmbientLight(0x404040)
-    scene.add(ambientLight)
-
+    // Lighting
+    const ambientLight = new THREE.AmbientLight(0x404040, 0.5)
     const pointLight = new THREE.PointLight(0xffffff, 1, 100)
     pointLight.position.set(0, 0, 10)
-    scene.add(pointLight)
+    scene.add(ambientLight, pointLight)
+
+    sceneRef.current = scene
+    cameraRef.current = camera
+    rendererRef.current = renderer
+
+    return { scene, camera, renderer, controls, stars }
+  }, [])
+
+  useEffect(() => {
+    const threeJSObjects = initThreeJS()
+    if (!threeJSObjects) return
+
+    const { scene, camera, renderer, controls, stars } = threeJSObjects
 
     const animate = () => {
       requestAnimationFrame(animate)
       controls.update()
 
-      planets.forEach((planet) => {
+      planetsRef.current.forEach((planet) => {
         planet.rotation.x += 0.01
         planet.rotation.y += 0.01
       })
@@ -78,6 +159,7 @@ export default function SpacePortfolio() {
     }
 
     animate()
+    setIsLoading(false)
 
     const raycaster = new THREE.Raycaster()
     const mouse = new THREE.Vector2()
@@ -87,40 +169,39 @@ export default function SpacePortfolio() {
       mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
 
       raycaster.setFromCamera(mouse, camera)
-      const intersects = raycaster.intersectObjects(planets)
+      const intersects = raycaster.intersectObjects(planetsRef.current)
 
       if (intersects.length > 0) {
-        const intersectedPlanet = intersects[0].object as THREE.Mesh
-        const planetIndex = planets.indexOf(intersectedPlanet)
-        setActiveSection(planetData[planetIndex].name)
+        const planet = intersects[0].object
+        setActiveSection(planet.userData.name as SectionName)
+        document.body.style.cursor = 'pointer'
       } else {
         setActiveSection(null)
+        document.body.style.cursor = 'default'
       }
     }
 
-    window.addEventListener('mousemove', onMouseMove)
-
     const handleResize = () => {
+      if (!camera || !renderer) return
       camera.aspect = window.innerWidth / window.innerHeight
       camera.updateProjectionMatrix()
       renderer.setSize(window.innerWidth, window.innerHeight)
     }
 
+    window.addEventListener('mousemove', onMouseMove)
     window.addEventListener('resize', handleResize)
-
-    setIsLoading(false)
 
     return () => {
       window.removeEventListener('mousemove', onMouseMove)
       window.removeEventListener('resize', handleResize)
+      renderer.dispose()
     }
-  }, [])
+  }, [initThreeJS])
 
   const sectionContent = {
     Skills: (
-      <div className="space-y-4">
-        <h2 className="text-2xl font-bold">Skills</h2>
-        <ul className="list-disc list-inside">
+      <SectionContent title="Skills">
+        <ul className="list-disc list-inside space-y-2">
           <li>React & React Native</li>
           <li>TypeScript</li>
           <li>Node.js</li>
@@ -128,83 +209,80 @@ export default function SpacePortfolio() {
           <li>Python</li>
           <li>Machine Learning</li>
         </ul>
-      </div>
+      </SectionContent>
     ),
     About: (
-      <div className="space-y-4">
-        <h2 className="text-2xl font-bold">About Peter Schun</h2>
-        <p>
+      <SectionContent title="About Peter Schun">
+        <p className="text-gray-200">
           Peter Schun is a passionate full-stack developer with 8+ years of experience in creating innovative web and
           mobile applications. He specializes in React, TypeScript, and Node.js, with a keen interest in AI and machine
           learning.
         </p>
-      </div>
+      </SectionContent>
     ),
     Hire: (
-      <div className="space-y-4">
-        <h2 className="text-2xl font-bold">Hire Peter</h2>
-        <p>
+      <SectionContent title="Hire Peter">
+        <p className="text-gray-200">
           Looking for a skilled developer to bring your ideas to life? Peter is available for freelance projects,
           full-time positions, and consulting work.
         </p>
-        <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
-          Get in Touch
-        </button>
-      </div>
+        <Button className="mt-4">Get in Touch</Button>
+      </SectionContent>
     ),
     Contact: (
-      <div className="space-y-4">
-        <h2 className="text-2xl font-bold">Contact</h2>
-        <p>Feel free to reach out for collaborations or just a friendly chat.</p>
-        <div className="flex space-x-4">
-          <a href="https://github.com/peterschun" target="_blank" rel="noopener noreferrer">
-            <FaGithub className="text-2xl hover:text-gray-300" />
+      <SectionContent title="Contact">
+        <p className="text-gray-200">Feel free to reach out for collaborations or just a friendly chat.</p>
+        <div className="flex space-x-6 mt-4">
+          <a 
+            href="https://github.com/peterschun" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="hover:text-gray-300 transition-colors"
+          >
+            <FaGithub className="text-2xl" />
           </a>
-          <a href="https://linkedin.com/in/peterschun" target="_blank" rel="noopener noreferrer">
-            <FaLinkedin className="text-2xl hover:text-blue-400" />
+          <a 
+            href="https://linkedin.com/in/peterschun" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="hover:text-blue-400 transition-colors"
+          >
+            <FaLinkedin className="text-2xl" />
           </a>
-          <a href="mailto:peter@schun.com">
-            <FaEnvelope className="text-2xl hover:text-red-400" />
+          <a 
+            href="mailto:peter@schun.com"
+            className="hover:text-red-400 transition-colors"
+          >
+            <FaEnvelope className="text-2xl" />
           </a>
         </div>
-      </div>
+      </SectionContent>
     ),
   }
 
   return (
     <div className="relative w-screen h-screen overflow-hidden bg-black text-white font-sans">
       {isLoading ? (
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-white"></div>
-        </div>
+        <LoadingSpinner />
       ) : (
         <>
           <canvas ref={canvasRef} className="absolute inset-0" />
-          <div className="absolute top-4 left-4 z-10">
-            <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
-              Peter Schun
-            </h1>
-            <p className="text-xl">Full-Stack Developer & AI Enthusiast</p>
-          </div>
-          <div className="absolute bottom-4 right-4 z-10">
-            <a
-              href="/peter_schun_cv.pdf"
-              download
-              className="flex items-center space-x-2 bg-white text-black px-4 py-2 rounded-full hover:bg-gray-200 transition-colors"
-            >
-              <FaFileDownload />
-              <span>Download CV</span>
-            </a>
-          </div>
+          <Header />
+          <CVDownloadButton />
           <AnimatePresence>
             {activeSection && (
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 50 }}
-                className="absolute bottom-4 left-4 z-10 bg-black bg-opacity-50 backdrop-blur-md p-6 rounded-lg max-w-md"
+                transition={{ duration: 0.3 }}
+                className="absolute bottom-4 left-4 z-10"
               >
-                {sectionContent[activeSection as keyof typeof sectionContent]}
+                <Card className="bg-black/50 backdrop-blur-md">
+                  <CardContent className="p-6">
+                    {sectionContent[activeSection]}
+                  </CardContent>
+                </Card>
               </motion.div>
             )}
           </AnimatePresence>
