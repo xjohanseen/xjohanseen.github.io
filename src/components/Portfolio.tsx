@@ -254,7 +254,7 @@ const Portfolio = () => {
         <div className="relative w-3/4 max-w-md aspect-square">
           <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-2xl transform rotate-6 blur-2xl opacity-30 animate-pulse" />
           <img
-            src="/public/1.png"
+            src="/1.png"
             alt="Profile picture of X Johanseen"
             className="relative rounded-2xl w-full h-full object-cover shadow-2xl"
           />
