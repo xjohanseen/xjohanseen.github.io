@@ -403,16 +403,16 @@ const Portfolio = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {[
           {
-            title: "Strategic Consulting",
-            description: "Architecture planning & technical roadmapping",
-            features: ["System Design", "Performance Optimization", "Security Audit"],
+            title: "Web Development",
+            description: "Full-stack implementation & deployment",
+            features: ["Websites", "Web Apps", "Backend", "APIs", "SPAs"],
             icon: <Bot className="w-8 h-8" />,
             color: "from-cyan-500 to-blue-500"
           },
           {
-            title: "Development",
-            description: "Full-stack implementation & deployment",
-            features: ["Frontend Development", "Backend Systems", "DevOps"],
+            title: "Mobile Development",
+            description: "Cross platform (Android, iOS, Windows) in React Native Expo",
+            features: ["Fully functional app", "API integration", "BaaS(Supabase, Firebase)", "App Store submition", "Regular Maintenance"],
             icon: <Code className="w-8 h-8" />,
             color: "from-purple-500 to-pink-500"
           }
@@ -459,53 +459,153 @@ const Portfolio = () => {
     </div>
   );
 
-  const ContactSection = () => (
-    <div className={`space-y-12 transform ${isLoaded ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"} transition-all duration-1000`}>
-      <h2 className="text-4xl font-orbitron font-bold bg-gradient-to-r from-cyan-500 to-purple-600 text-transparent bg-clip-text">
-        Initialize Connection
-      </h2>
-      
-      <div className="relative">
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-xl blur opacity-30"></div>
-        <form className="relative space-y-6 p-8 bg-gray-800 rounded-xl">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+  const ContactSection = () => {
+    const email = "xjohanseen@gmail.com";
+    const subject = encodeURIComponent("Inquiry for collaboration");
+    const body = encodeURIComponent("Hi, I would like to get in touch regarding...");
+  
+    const mailtoLink = `mailto:${email}?subject=${subject}&body=${body}`;
+  
+    return (
+      <div className={`space-y-12 transform ${isLoaded ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"} transition-all duration-1000`}>
+        <h2 className="text-4xl font-orbitron font-bold bg-gradient-to-r from-cyan-500 to-purple-600 text-transparent bg-clip-text">
+          Initialise Connection
+        </h2>
+  
+        <p className={"text-xl font-space-grotesk font-bold text-gray-400 mb-2"}>
+          💡 Get in touch with me now
+        </p>
+        
+        <div className="relative">
+          <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-xl blur opacity-30"></div>
+          <form className="relative space-y-6 p-8 bg-gray-800 rounded-xl">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-gray-300 font-space-grotesk">Identification</label>
+                <input
+                  required
+                  type="text"
+                  placeholder="Your Name"
+                  className="w-full p-4 bg-gray-900 rounded-lg border border-gray-700 focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none text-white placeholder-gray-500 transition-all duration-300"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-gray-300 font-space-grotesk">Communication Channel</label>
+                <input
+                  required
+                  type="email"
+                  placeholder="Your Email"
+                  className="w-full p-4 bg-gray-900 rounded-lg border border-gray-700 focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none text-white placeholder-gray-500 transition-all duration-300"
+                />
+              </div>
+            </div>
+            
             <div className="space-y-2">
-              <label className="text-gray-300 font-space-grotesk">Identification</label>
-              <input
-                type="text"
-                placeholder="Your Name"
+              <label className="text-gray-300 font-space-grotesk">Transmission Content</label>
+              <textarea
+                required
+                placeholder="Your Message"
+                rows={6}
                 className="w-full p-4 bg-gray-900 rounded-lg border border-gray-700 focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none text-white placeholder-gray-500 transition-all duration-300"
               />
             </div>
-            <div className="space-y-2">
-              <label className="text-gray-300 font-space-grotesk">Communication Channel</label>
-              <input
-                type="email"
-                placeholder="Your Email"
-                className="w-full p-4 bg-gray-900 rounded-lg border border-gray-700 focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none text-white placeholder-gray-500 transition-all duration-300"
-              />
-            </div>
-          </div>
-          
-          <div className="space-y-2">
-            <label className="text-gray-300 font-space-grotesk">Transmission Content</label>
-            <textarea
-              placeholder="Your Message"
-              rows={6}
-              className="w-full p-4 bg-gray-900 rounded-lg border border-gray-700 focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none text-white placeholder-gray-500 transition-all duration-300"
-            />
-          </div>
-          
-          <button className="w-full py-4 px-6 rounded-lg bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-medium hover:from-cyan-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-[1.02] font-space-grotesk">
-            <span className="flex items-center justify-center gap-2">
-              Transmit Message
-              <Mail className="w-5 h-5" />
-            </span>
-          </button>
-        </form>
+            
+            <a type={"submit"} href={mailtoLink} className="w-full py-4 px-6 rounded-lg bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-medium hover:from-cyan-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-[1.02] font-space-grotesk text-center block">
+              <span className="flex items-center justify-center gap-2">
+                Transmit Message
+                <Mail className="w-5 h-5" />
+              </span>
+            </a>
+          </form>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
+
+  /**
+   * const ContactSection = () => {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [message, setMessage] = useState('');
+    const [isLoaded, setIsLoaded] = useState(true); 
+  
+    const sendEmail = (e) => {
+      e.preventDefault();
+  
+      const templateParams = {
+        from_name: name,
+        from_email: email,
+        message: message,
+      };
+  
+      emailjs.send("service_y7xfjat", "template_sisye5p", templateParams, 'YOUR_USER_ID')
+        .then((response) => {
+          console.log('Email sent successfully!', response.status, response.text);
+          // Optionally clear the form or show a success message
+        }, (err) => {
+          console.error('Failed to send email. Error:', err);
+        });
+    };
+  
+    return (
+      <div className={`space-y-12 transform ${isLoaded ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"} transition-all duration-1000`}>
+        <h2 className="text-4xl font-orbitron font-bold bg-gradient-to-r from-cyan-500 to-purple-600 text-transparent bg-clip-text">
+          Initialise Connection
+        </h2>
+  
+        <p className={"text-xl font-space-grotesk font-bold text-gray-400 mb-2"}>
+          💡 Get in touch with me now
+        </p>
+        
+        <div className="relative">
+          <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-xl blur opacity-30"></div>
+          <form className="relative space-y-6 p-8 bg-gray-800 rounded-xl" onSubmit={sendEmail}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-gray-300 font-space-grotesk">Identification</label>
+                <input
+                  type="text"
+                  placeholder="Your Name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full p-4 bg-gray-900 rounded-lg border border-gray-700 focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none text-white placeholder-gray-500 transition-all duration-300"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-gray-300 font-space-grotesk">Communication Channel</label>
+                <input
+                  type="email"
+                  placeholder="Your Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full p-4 bg-gray-900 rounded-lg border border-gray-700 focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none text-white placeholder-gray-500 transition-all duration-300"
+                />
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <label className="text-gray-300 font-space-grotesk">Transmission Content</label>
+              <textarea
+                placeholder="Your Message"
+                rows={6}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                className="w-full p-4 bg-gray-900 rounded-lg border border-gray-700 focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none text-white placeholder-gray-500 transition-all duration-300"
+              />
+            </div>
+            
+            <button type="submit" className="w-full py-4 px-6 rounded-lg bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-medium hover:from-cyan-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-[1.02] font-space-grotesk">
+              <span className="flex items-center justify-center gap-2">
+                Transmit Message
+                <Mail className="w-5 h-5" />
+              </span>
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  };
+   */
 
     return (
         <div className="min-h-screen bg-gray-900 text-white overflow-hidden">
