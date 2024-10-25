@@ -149,13 +149,14 @@ const Portfolio = () => {
 
 
   const AboutSection = () => (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-      <div className={`space-y-8 transform ${isLoaded ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'} transition-all duration-1000`}>
-        <div className="space-y-4">
-          <h1 className="text-5xl md:text-6xl font-orbitron font-bold">
-            <span className="text-gray-200 block transform hover:scale-105 transition-transform duration-300">
-              Hi, I'm
-            </span>
+    <div className="flex flex-col lg:flex-row items-center gap-12">
+      <div className={`space-y-8 transform ${isLoaded ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'} transition-all duration-1000 flex-1`}>
+        
+        <div className="space-y-12">
+          <div className="flex gap-4 text-5xl md:text-6xl font-orbitron font-bold">
+            <h1 className="flex text-gray-200 block transform hover:scale-105 transition-transform duration-300">
+              👋 I'm
+            </h1>
             <span className="bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 text-transparent bg-clip-text block transform hover:scale-105 transition-transform duration-300">
               X
             </span>
@@ -165,11 +166,34 @@ const Portfolio = () => {
               </span>
               <div className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-purple-600 to-pink-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
             </span>
-          </h1>
+          </div>
           <p className="text-xl text-gray-400 font-space-grotesk leading-relaxed">
-            Crafting elegant digital experiences, One line of code at a time
+            Hello! I'm a Developer 🌟. I build seamless and interactive applications using the incredible TypeScript ecosystem. With a solid foundation in React, React Native, and Next.js, I create dynamic web and mobile experiences that are not just visually appealing but also highly functional. 🚀
           </p>
         </div>
+
+        {/**
+         * <div className="space-y-12">
+            <div className="flex items-center gap-4 text-5xl md:text-6xl font-orbitron font-bold">
+                <h1 className="text-gray-200 block transform hover:scale-105 transition-transform duration-300">
+                👋 I'm
+                </h1>
+                <span className="bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 text-transparent bg-clip-text block transform hover:scale-105 transition-transform duration-300">
+                X
+                </span>
+                <span className="relative inline-block">
+                <span className="bg-gradient-to-r from-purple-600 to-pink-600 text-transparent bg-clip-text transform hover:scale-105 transition-transform duration-300">
+                    Johanseen
+                </span>
+                <div className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-purple-600 to-pink-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+                </span>
+            </div>
+            <p className="text-xl text-gray-400 font-space-grotesk leading-relaxed">
+                Hello! I'm a Developer 🌟. I build seamless and interactive applications using the incredible TypeScript ecosystem. With a solid foundation in React, React Native, and Next.js, I create dynamic web and mobile experiences that are not just visually appealing but also highly functional. 🚀
+            </p>
+        </div>
+         */}
+
         
         <div className="flex gap-6">
           {[
@@ -186,19 +210,22 @@ const Portfolio = () => {
               <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-xl blur opacity-0 group-hover:opacity-30 transition duration-300" />
             </a>
           ))}
-          <button className="group flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white transition-all duration-300 shadow-lg shadow-purple-500/25">
+          <button 
+            className="group flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white transition-all duration-300 shadow-lg shadow-purple-500/25"
+            aria-label="Download CV"
+          >
             <Download className="w-5 h-5 transition-transform group-hover:scale-110" />
             <span className="hidden md:inline font-space-grotesk">Download CV</span>
-            </button>
+          </button>
         </div>
       </div>
-
-      <div className={`relative transform ${isLoaded ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'} transition-all duration-1000 delay-300`}>
-        <div className="relative w-full aspect-square">
+  
+      <div className={`relative transform ${isLoaded ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'} transition-all duration-1000 delay-300 flex-1 flex justify-center`}>
+        <div className="relative w-3/4 max-w-md aspect-square">
           <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-2xl transform rotate-6 blur-2xl opacity-30 animate-pulse" />
           <img
             src="/public/1.png"
-            alt="X Johanseen"
+            alt="Profile picture of X Johanseen"
             className="relative rounded-2xl w-full h-full object-cover shadow-2xl"
           />
           <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-2xl blur opacity-20" />
@@ -206,6 +233,8 @@ const Portfolio = () => {
       </div>
     </div>
   );
+  
+  
 
   const SkillsSection = () => (
     <div className={`space-y-12 transform ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'} transition-all duration-1000`}>
@@ -262,6 +291,10 @@ const Portfolio = () => {
       <h2 className="text-4xl font-orbitron font-bold bg-gradient-to-r from-cyan-500 to-purple-600 text-transparent bg-clip-text">
         Digital Creations
       </h2>
+
+      <p className={"text-xl font-space-grotesk font-bold text-gray-400 mb-2"}>
+      💡 I thrive on turning ideas into reality, ensuring that every project is not only effective but also delightful to use.
+      </p>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {projects.map((project, index) => (
