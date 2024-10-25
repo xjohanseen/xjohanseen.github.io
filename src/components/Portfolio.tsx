@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
   Code, 
   User, 
@@ -13,6 +13,7 @@ import {
 
 const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('about');
+  const [isLoaded, setIsLoaded] = useState(false);
   //const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   //const [cursorSize, setCursorSize] = useState(20);
 
@@ -26,6 +27,10 @@ const Portfolio = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
    */
+
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
 
   const skills = [
     { name: 'React', level: 90 },
@@ -54,40 +59,75 @@ const Portfolio = () => {
    */
 
   const NavButton = ({ icon: Icon, label, section }: { icon: React.ElementType; label: string; section: string }) => (
+
     <button
-      className={`flex items-center gap-2 p-4 rounded-lg transition-all duration-300 ${
-        activeSection === section
-          ? 'bg-indigo-600 text-white'
-          : 'hover:bg-indigo-100'
+    className={`group flex items-center gap-2 px-6 py-3 rounded-xl transition-all duration-300 backdrop-blur-lg
+      ${activeSection === section
+        ? 'bg-gradient-to-r from-cyan-500 to-purple-600 text-white shadow-lg shadow-purple-500/25'
+        : 'hover:bg-white/10 text-gray-300 hover:text-white'
       }`}
-      onClick={() => setActiveSection(section)}
-      //onMouseEnter={() => setCursorSize(40)}
+    onClick={() => setActiveSection(section)}
+    //onMouseEnter={() => setCursorSize(40)}
       //onMouseLeave={() => setCursorSize(20)}
-    >
-      <Icon className="w-5 h-5" />
-      <span className="hidden md:inline">{label}</span>
-    </button>
+  >
+    <Icon className="w-5 h-5 transition-transform group-hover:scale-110" />
+    <span className="hidden md:inline font-space-grotesk">{label}</span>
+  </button>
   );
 
+
   const AboutSection = () => (
-    <div className="space-y-6 animate-fadeIn">
-      <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
-        XJohanseen
-      </h2>
-      <p className="text-xl text-gray-700">
-        Full-stack developer with a passion for creating immersive web experiences.
-        Transforming ideas into elegant, efficient solutions.
-      </p>
-      <div className="flex gap-4">
-        <a href="https://github.com" className="text-gray-600 hover:text-indigo-600 transition-colors">
-          <Github className="w-6 h-6" />
-        </a>
-        <a href="https://linkedin.com" className="text-gray-600 hover:text-indigo-600 transition-colors">
-          <Linkedin className="w-6 h-6" />
-        </a>
-        <a href="https://twitter.com" className="text-gray-600 hover:text-indigo-600 transition-colors">
-          <Twitter className="w-6 h-6" />
-        </a>
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div className={`space-y-8 transform ${isLoaded ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'} transition-all duration-1000`}>
+        <div className="space-y-4">
+          <h1 className="text-5xl md:text-6xl font-orbitron font-bold">
+            <span className="text-gray-200 block transform hover:scale-105 transition-transform duration-300">
+              Hi, I'm
+            </span>
+            <span className="bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 text-transparent bg-clip-text block transform hover:scale-105 transition-transform duration-300">
+              X
+            </span>
+            <span className="relative inline-block">
+              <span className="bg-gradient-to-r from-purple-600 to-pink-600 text-transparent bg-clip-text transform hover:scale-105 transition-transform duration-300">
+                Johanseen
+              </span>
+              <div className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-purple-600 to-pink-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+            </span>
+          </h1>
+          <p className="text-xl text-gray-400 font-space-grotesk leading-relaxed">
+            Full-stack developer crafting immersive digital experiences through elegant code and innovative design.
+          </p>
+        </div>
+        
+        <div className="flex gap-6">
+          {[
+            { icon: Github, href: "https://github.com", label: "GitHub" },
+            { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
+            { icon: Twitter, href: "https://twitter.com", label: "Twitter" }
+          ].map(({ icon: Icon, href, label }) => (
+            <a
+              key={label}
+              href={href}
+              className="group relative w-12 h-12 flex items-center justify-center rounded-xl bg-gray-800 hover:bg-gradient-to-r from-cyan-500 to-purple-600 transition-all duration-300"
+              aria-label={label}
+            >
+              <Icon className="w-6 h-6 text-gray-400 group-hover:text-white transform group-hover:scale-110 transition-all duration-300" />
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-xl blur opacity-0 group-hover:opacity-30 transition duration-300" />
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div className={`relative transform ${isLoaded ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'} transition-all duration-1000 delay-300`}>
+        <div className="relative w-full aspect-square">
+          <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-2xl transform rotate-6 blur-2xl opacity-30 animate-pulse" />
+          <img
+            src="/api/placeholder/500/500"
+            alt="X Johanseen"
+            className="relative rounded-2xl w-full h-full object-cover shadow-2xl"
+          />
+          <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-2xl blur opacity-20" />
+        </div>
       </div>
     </div>
   );
@@ -158,34 +198,29 @@ const Portfolio = () => {
     </div>
   );
 
-  return (
-    <div className="min-h-screen bg-gray-50 cursor-none">
-      {/**<CustomCursor /> */}
-      <div className="max-w-6xl mx-auto p-6">
-        <nav className="fixed bottom-6 left-1/2 transform -translate-x-1/2 flex gap-4 bg-white/80 backdrop-blur-lg p-2 rounded-full shadow-lg z-40">
-          <NavButton icon={User} label="About" section="about" />
-          <NavButton icon={Code} label="Skills" section="skills" />
-          <NavButton icon={Briefcase} label="Hire" section="hire" />
-          <NavButton icon={Mail} label="Contact" section="contact" />
-          <button
-            className="flex items-center gap-2 p-4 rounded-lg hover:bg-indigo-100 transition-all duration-300"
-            //onMouseEnter={() => setCursorSize(40)}
-            //onMouseLeave={() => setCursorSize(20)}
-          >
-            <Download className="w-5 h-5" />
-            <span className="hidden md:inline">CV</span>
-          </button>
-        </nav>
-
-        <main className="pt-20 pb-32">
-          {activeSection === 'about' && <AboutSection />}
-          {activeSection === 'skills' && <SkillsSection />}
-          {activeSection === 'hire' && <HireSection />}
-          {activeSection === 'contact' && <ContactSection />}
-        </main>
-      </div>
-    </div>
-  );
+    return (
+        <div className="min-h-screen bg-gray-900 text-white overflow-hidden">
+          <div className="max-w-7xl mx-auto p-6">
+            <nav className="fixed bottom-8 left-1/2 transform -translate-x-1/2 flex gap-4 bg-gray-800/80 backdrop-blur-xl p-3 rounded-2xl shadow-2xl border border-gray-700/50 z-40">
+              <NavButton icon={User} label="About" section="about" />
+              <NavButton icon={Code} label="Skills" section="skills" />
+              <NavButton icon={Briefcase} label="Hire" section="hire" />
+              <NavButton icon={Mail} label="Contact" section="contact" />
+              <button className="group flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white transition-all duration-300 shadow-lg shadow-purple-500/25">
+                <Download className="w-5 h-5 transition-transform group-hover:scale-110" />
+                <span className="hidden md:inline font-space-grotesk">CV</span>
+              </button>
+            </nav>
+    
+            <main className="pt-20 pb-32">
+            {activeSection === 'about' && <AboutSection />}
+            {activeSection === 'skills' && <SkillsSection />}
+            {activeSection === 'hire' && <HireSection />}
+            {activeSection === 'contact' && <ContactSection />}
+            </main>
+          </div>
+        </div>
+      );
 };
 
 export default Portfolio;
