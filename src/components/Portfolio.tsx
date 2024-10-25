@@ -33,6 +33,7 @@ const Portfolio = () => {
 
   useEffect(() => {
     setIsLoaded(true);
+    console.log(hoveredProject)
   }, []);
 
   
