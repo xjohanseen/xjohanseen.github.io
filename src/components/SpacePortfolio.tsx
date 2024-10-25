@@ -37,7 +37,7 @@ const LoadingSpinner = () => (
 const Header = () => (
   <div className="absolute top-4 left-4 z-10">
     <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
-      Peter Schun
+      X Johanseen
     </h1>
     <p className="text-xl">Full-Stack Developer & AI Enthusiast</p>
   </div>
@@ -57,7 +57,7 @@ const CVDownloadButton = () => (
 
 export default function SpacePortfolio() {
   const [activeSection, setActiveSection] = useState<SectionName | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const sceneRef = useRef<THREE.Scene | null>(null)
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null)
