@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { 
     Code, 
     User, 
@@ -10,10 +10,10 @@ import {
     ExternalLink,
     Bot,
     Folder
-  } from 'lucide-react';
+  } from "lucide-react";
 
 const Portfolio = () => {
-  const [activeSection, setActiveSection] = useState<string>('about');
+  const [activeSection, setActiveSection] = useState<string>("about");
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
@@ -26,8 +26,8 @@ const Portfolio = () => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
    */
 
@@ -35,79 +35,108 @@ const Portfolio = () => {
     setIsLoaded(true);
   }, []);
 
+  
   const skills = [
     { 
-      name: 'React', 
+        name: "TypeScript", 
+        level: 85, 
+        color: "from-blue-600 to-indigo-600",
+        icon: <Code className="w-6 h-6" />,
+        description: "Strongly typed development for enhanced code reliability and maintainability."
+    },
+    { 
+      name: "React", 
       level: 90, 
-      color: 'from-cyan-500 to-blue-500',
+      color: "from-cyan-500 to-blue-500",
       icon: <Bot className="w-6 h-6" />,
-      description: 'Advanced component architecture & state management'
+      description: "Advanced component architecture & state management"
     },
     { 
-      name: 'TypeScript', 
-      level: 85, 
-      color: 'from-blue-500 to-indigo-500',
+        name: "Node.js", 
+        level: 75, 
+        color: "from-green-600 to-emerald-600",
+        icon: <Bot className="w-6 h-6" />,
+        description: "Proficient in creating scalable server-side applications and RESTful APIs."
+    },
+    { 
+        name: "React Native", 
+        level: 80, 
+        color: "from-blue-600 to-emerald-600",
+        icon: <Bot className="w-6 h-6" />,
+        description: "Experienced in developing cross-platform mobile applications using Expo CLI."
+    },
+    { 
+      name: "Python", 
+      level: 60, 
+      color: "from-yellow-500 to-orange-500",
       icon: <Code className="w-6 h-6" />,
-      description: 'Type-safe development & advanced patterns'
+      description: "Backend dvelopment, Data analysis, Data processing & automation"
     },
     { 
-      name: 'Node.js', 
-      level: 80, 
-      color: 'from-green-500 to-emerald-500',
-      icon: <Bot className="w-6 h-6" />,
-      description: 'Server-side applications & API development'
+        name: "PostgreSQL", 
+        level: 65, 
+        color: "from-orange-600 to-red-600",
+        icon: <Bot className="w-6 h-6" />,
+        description: "Experienced in managing and querying databases of varying scales."
     },
     { 
-      name: 'Python', 
-      level: 75, 
-      color: 'from-yellow-500 to-orange-500',
-      icon: <Code className="w-6 h-6" />,
-      description: 'Data processing & automation'
+        name: "Django", 
+        level: 65, 
+        color: "from-orange-600 to-red-600",
+        icon: <Bot className="w-6 h-6" />,
+        description: "Capable of building fast and reliable web applications and APIs with Django."
     },
     { 
-      name: 'AWS', 
-      level: 70, 
-      color: 'from-orange-500 to-red-500',
-      icon: <Bot className="w-6 h-6" />,
-      description: 'Cloud infrastructure & serverless architecture'
+        name: "Supabase", 
+        level: 75, 
+        color: "from-orange-600 to-red-600",
+        icon: <Bot className="w-6 h-6" />,
+        description: "Efficient in utilizing Supabase for backend services and real-time data management."
+    },
+    { 
+        name: "Firebase", 
+        level: 60, 
+        color: "from-orange-600 to-red-600",
+        icon: <Bot className="w-6 h-6" />,
+        description: "Familiar with using Firebase for rapid backend development and real-time database solutions."
     }
   ];
 
   const projects = [
     {
-      id: 'quantum-dash',
-      title: 'Quantum Dashboard',
-      description: 'Real-time analytics platform built with React, TypeScript, and D3.js. Features interactive visualizations and dark mode support.',
-      tags: ['React', 'TypeScript', 'D3.js', 'Firebase'],
-      image: '/public/quantum-dash.png',
+      id: "quantum-dash",
+      title: "Quantum Dashboard",
+      description: "Real-time analytics platform built with React, TypeScript, and D3.js. Features interactive visualizations and dark mode support.",
+      tags: ["React", "TypeScript", "D3.js", "Firebase"],
+      image: "/public/quantum-dash.png",
       links: {
-        github: 'https://github.com/xjohanseen/quantum-dash',
-        live: 'https://quantum-dash.demo'
+        github: "https://github.com/xjohanseen/quantum-dash",
+        live: "https://quantum-dash.demo"
       },
-      color: 'from-cyan-500 to-blue-500'
+      color: "from-cyan-500 to-blue-500"
     },
     {
-      id: 'neural-forge',
-      title: 'Neural Forge',
-      description: 'AI model training platform with distributed computing capabilities. Built with Python, PyTorch, and FastAPI.',
-      tags: ['Python', 'PyTorch', 'FastAPI', 'Redis'],
-      image: '/public/neural-forge.png',
+      id: "neural-forge",
+      title: "Neural Forge",
+      description: "AI model training platform with distributed computing capabilities. Built with Python, PyTorch, and FastAPI.",
+      tags: ["Python", "PyTorch", "FastAPI", "Redis"],
+      image: "/public/neural-forge.png",
       links: {
-        github: 'https://github.com/xjohanseen/neural-forge'
+        github: "https://github.com/xjohanseen/neural-forge"
       },
-      color: 'from-purple-500 to-pink-500'
+      color: "from-purple-500 to-pink-500"
     },
     {
-      id: 'cryptosphere',
-      title: 'CryptoSphere',
-      description: 'Blockchain analytics tool with real-time market data visualization and portfolio tracking.',
-      tags: ['Node.js', 'Web3.js', 'React', 'GraphQL'],
-      image: '/public/cryptosphere.png',
+      id: "cryptosphere",
+      title: "CryptoSphere",
+      description: "Blockchain analytics tool with real-time market data visualization and portfolio tracking.",
+      tags: ["Node.js", "Web3.js", "React", "GraphQL"],
+      image: "/public/cryptosphere.png",
       links: {
-        github: 'https://github.com/xjohanseen/cryptosphere',
-        live: 'https://cryptosphere.demo'
+        github: "https://github.com/xjohanseen/cryptosphere",
+        live: "https://cryptosphere.demo"
       },
-      color: 'from-green-500 to-emerald-500'
+      color: "from-green-500 to-emerald-500"
     }
   ];
 
@@ -135,8 +164,8 @@ const Portfolio = () => {
     <button
     className={`group flex items-center gap-2 px-6 py-3 rounded-xl transition-all duration-300 backdrop-blur-lg
       ${activeSection === section
-        ? 'bg-gradient-to-r from-cyan-500 to-purple-600 text-white shadow-lg shadow-purple-500/25'
-        : 'hover:bg-white/10 text-gray-300 hover:text-white'
+        ? "bg-gradient-to-r from-cyan-500 to-purple-600 text-white shadow-lg shadow-purple-500/25"
+        : "hover:bg-white/10 text-gray-300 hover:text-white"
       }`}
     onClick={() => setActiveSection(section)}
     //onMouseEnter={() => setCursorSize(40)}
@@ -150,12 +179,12 @@ const Portfolio = () => {
 
   const AboutSection = () => (
     <div className="flex flex-col lg:flex-row items-center gap-12">
-      <div className={`space-y-8 transform ${isLoaded ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'} transition-all duration-1000 flex-1`}>
+      <div className={`space-y-8 transform ${isLoaded ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0"} transition-all duration-1000 flex-1`}>
         
         <div className="space-y-12">
           <div className="flex gap-4 text-5xl md:text-6xl font-orbitron font-bold">
             <h1 className="flex text-gray-200 block transform hover:scale-105 transition-transform duration-300">
-              👋 I'm
+              👋 I"m
             </h1>
             <span className="bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 text-transparent bg-clip-text block transform hover:scale-105 transition-transform duration-300">
               X
@@ -168,7 +197,7 @@ const Portfolio = () => {
             </span>
           </div>
           <p className="text-xl text-gray-400 font-space-grotesk leading-relaxed">
-            Hello! I'm a Developer 🌟. I build seamless and interactive applications using the incredible TypeScript ecosystem. With a solid foundation in React, React Native, and Next.js, I create dynamic web and mobile experiences that are not just visually appealing but also highly functional. 🚀
+            Hello! I"m a Developer 🌟. I build seamless and interactive applications using the incredible TypeScript ecosystem. With a solid foundation in React, React Native, and Next.js, I create dynamic web and mobile experiences that are not just visually appealing but also highly functional. 🚀
           </p>
         </div>
 
@@ -176,7 +205,7 @@ const Portfolio = () => {
          * <div className="space-y-12">
             <div className="flex items-center gap-4 text-5xl md:text-6xl font-orbitron font-bold">
                 <h1 className="text-gray-200 block transform hover:scale-105 transition-transform duration-300">
-                👋 I'm
+                👋 I"m
                 </h1>
                 <span className="bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 text-transparent bg-clip-text block transform hover:scale-105 transition-transform duration-300">
                 X
@@ -189,7 +218,7 @@ const Portfolio = () => {
                 </span>
             </div>
             <p className="text-xl text-gray-400 font-space-grotesk leading-relaxed">
-                Hello! I'm a Developer 🌟. I build seamless and interactive applications using the incredible TypeScript ecosystem. With a solid foundation in React, React Native, and Next.js, I create dynamic web and mobile experiences that are not just visually appealing but also highly functional. 🚀
+                Hello! I"m a Developer 🌟. I build seamless and interactive applications using the incredible TypeScript ecosystem. With a solid foundation in React, React Native, and Next.js, I create dynamic web and mobile experiences that are not just visually appealing but also highly functional. 🚀
             </p>
         </div>
          */}
@@ -220,7 +249,7 @@ const Portfolio = () => {
         </div>
       </div>
   
-      <div className={`relative transform ${isLoaded ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'} transition-all duration-1000 delay-300 flex-1 flex justify-center`}>
+      <div className={`relative transform ${isLoaded ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"} transition-all duration-1000 delay-300 flex-1 flex justify-center`}>
         <div className="relative w-3/4 max-w-md aspect-square">
           <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-2xl transform rotate-6 blur-2xl opacity-30 animate-pulse" />
           <img
@@ -237,7 +266,7 @@ const Portfolio = () => {
   
 
   const SkillsSection = () => (
-    <div className={`space-y-12 transform ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'} transition-all duration-1000`}>
+    <div className={`space-y-12 transform ${isLoaded ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"} transition-all duration-1000`}>
       <h2 className="text-4xl font-orbitron font-bold bg-gradient-to-r from-cyan-500 to-purple-600 text-transparent bg-clip-text">
         Technical Arsenal
       </h2>
@@ -273,8 +302,8 @@ const Portfolio = () => {
                   <div 
                     className={`h-full bg-gradient-to-r ${skill.color} transition-all duration-1000 ease-out`}
                     style={{ 
-                      width: hoveredSkill === skill.name ? `${skill.level}%` : '0%',
-                      transition: 'width 1s ease-out'
+                      width: hoveredSkill === skill.name ? `${skill.level}%` : "0%",
+                      transition: "width 1s ease-out"
                     }}
                   />
                 </div>
@@ -287,7 +316,7 @@ const Portfolio = () => {
   );
 
   const ProjectsSection = () => (
-    <div className={`space-y-12 transform ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'} transition-all duration-1000`}>
+    <div className={`space-y-12 transform ${isLoaded ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"} transition-all duration-1000`}>
       <h2 className="text-4xl font-orbitron font-bold bg-gradient-to-r from-cyan-500 to-purple-600 text-transparent bg-clip-text">
         Digital Creations
       </h2>
@@ -366,7 +395,7 @@ const Portfolio = () => {
 
 
   const HireSection = () => (
-    <div className={`space-y-12 transform ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'} transition-all duration-1000`}>
+    <div className={`space-y-12 transform ${isLoaded ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"} transition-all duration-1000`}>
       <h2 className="text-4xl font-orbitron font-bold bg-gradient-to-r from-cyan-500 to-purple-600 text-transparent bg-clip-text">
         Collaboration Protocols
       </h2>
@@ -431,7 +460,7 @@ const Portfolio = () => {
   );
 
   const ContactSection = () => (
-    <div className={`space-y-12 transform ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'} transition-all duration-1000`}>
+    <div className={`space-y-12 transform ${isLoaded ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"} transition-all duration-1000`}>
       <h2 className="text-4xl font-orbitron font-bold bg-gradient-to-r from-cyan-500 to-purple-600 text-transparent bg-clip-text">
         Initialize Connection
       </h2>
@@ -491,11 +520,11 @@ const Portfolio = () => {
             </nav>
     
             <main className="pt-20 pb-32">
-            {activeSection === 'about' && <AboutSection />}
-            {activeSection === 'skills' && <SkillsSection />}
-            {activeSection === 'projects' && <ProjectsSection />}
-            {activeSection === 'hire' && <HireSection />}
-            {activeSection === 'contact' && <ContactSection />}
+            {activeSection === "about" && <AboutSection />}
+            {activeSection === "skills" && <SkillsSection />}
+            {activeSection === "projects" && <ProjectsSection />}
+            {activeSection === "hire" && <HireSection />}
+            {activeSection === "contact" && <ContactSection />}
             </main>
           </div>
         </div>
